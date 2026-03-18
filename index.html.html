@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio - Clube Duratex</title>
+    <style>
+        :root {
+            --azul-duratex: #1d438a;
+            --azul-claro: #3b5998;
+            --branco: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-duratex) 100%);
+        }
+
+        .card {
+            background-color: var(--branco);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 320px;
+            border-top: 8px solid var(--azul-duratex);
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        #resultado {
+            font-size: 6rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--azul-duratex);
+            display: block;
+        }
+
+        .botao-sortear {
+            background-color: var(--azul-duratex);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .botao-sortear:hover {
+            background-color: #15326a;
+        }
+
+        .botao-sortear:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="https://app.clubeduratex.com.br/assets/logo.9e404db0.svg" alt="Clube Duratex" class="logo">
+        
+        <div id="resultado">--</div>
+
+        <button class="botao-sortear" id="btnSortear">SORTEAR</button>
+
+        <p style="color: #888; margin-top: 15px;">Intervalo: 1 a 100</p>
+    </div>
+
+    <script>
+        // Selecionando os elementos
+        const botao = document.getElementById('btnSortear');
+        const display = document.getElementById('resultado');
+
+        // Função que gera o número
+        function sortear() {
+            // 1. Desabilita o botão para evitar cliques múltiplos
+            botao.disabled = true;
+            botao.innerText = "SORTEANDO...";
+
+            let contador = 0;
+            
+            // 2. Efeito visual de giro (roda 15 vezes)
+            const intervalo = setInterval(() => {
+                const numeroTemporario = Math.floor(Math.random() * 100) + 1;
+                display.innerText = numeroTemporario;
+                contador++;
+
+                if (contador >= 15) {
+                    clearInterval(intervalo);
+                    
+                    // 3. Resultado Final definitivo
+                    const numeroFinal = Math.floor(Math.random() * 100) + 1;
+                    display.innerText = numeroFinal;
+                    
+                    // 4. Reabilita o botão
+                    botao.disabled = false;
+                    botao.innerText = "SORTEAR NOVAMENTE";
+                }
+            }, 50); // Velocidade da troca (50ms)
+        }
+
+        // Adicionando o evento de clique ao botão
+        botao.addEventListener('click', sortear);
+    </script>
+
+</body>
+</html>
